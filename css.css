@@ -10,3 +10,22 @@ body{
         color:rgb(11, 112, 79);
     }
 }
+#boxImage {
+    position: absolute;
+    bottom: -10; /* 固定在底部 */
+    left: 50%; /* 水平置中 */
+    transform: translateX(-50%); /* 修正置中位置 */
+    width: 500px; /* 圖片寬度，可依需求調整 */
+    height: auto; /* 保持圖片比例 */
+}
+@keyframes shake {
+    0% { transform: translateX(-10px) translateY(-10px); } /* 左上 */
+    25% { transform: translateX(10px) translateY(10px); }  /* 右下 */
+    50% { transform: translateX(-10px) translateY(-10px); } /* 左上 */
+    75% { transform: translateX(10px) translateY(10px); }  /* 右下 */
+    100% { transform: translateX(0) translateY(0); }  
+}   
+
+.shake {
+    animation: shake 5s ease-in-out;
+}
