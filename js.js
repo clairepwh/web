@@ -1,29 +1,29 @@
+let Crestaurants = [];
+let Jrestaurants = [];
+let Krestaurants = [];
+let Wrestaurants = [];
 function kind(number)
 {
 let a = number;
 
 switch(a){
-    case "Chinese":window.location.href = './Chinese style.html';
+    case "Chinese":
+    case "中式":window.location.href = './Chinese style.html';
         break;
-    case "Japanese":window.location.href = './Japanese style.html';
+    case "Japanese":
+    case "日式":window.location.href = './Japanese style.html';
         break;
-    case "Korean":window.location.href = './Korean style.html';
+    case "Korean":
+    case "韓式":window.location.href = './Korean style.html';
         break;
-    case "Western":window.location.href = './Western.html';
+    case "Western":
+    case "西式": window.location.href = './Western style.html';
         break;
     case "home":window.location.href = './html.html';
         break;
 }
 }
-/*document.getElementById("boxImage").addEventListener("click", function() {
-    let img = this;
-    console.log("圖片被點擊！");
-    img.classList.add("shake");
-    setTimeout(() => { 
-        img.classList.remove("shake"); 
-    }, 5000);
 
-});*/
 document.addEventListener("DOMContentLoaded", function() {
     // 確保圖片元素已經加載完畢
     const boxImage = document.getElementById("boxImage");
@@ -43,3 +43,6 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("圖片元素未找到！");
     }
 });
+
+
+    
