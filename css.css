@@ -1,31 +1,56 @@
-body{
+body {
     background-image: url('background.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
-    #price{
-        color: #de7866; 
-    }
-    #time{
-        color:rgb(11, 112, 79);
-    }
+    background-attachment: relative;
 }
+#iconContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 欄 */
+    gap: 20px; /* 圖片之間的間距 */
+    width: 880px; /* 整個區域的寬度 */
+    margin: 50px auto; /* 置中 */
+}
+
+.icon {
+    background-size: cover;
+    width: 408px;
+    height: 289px;
+}
+#Cicon { background-image: url('中式.webp'); }
+#Jicon { background-image: url('日式.webp'); }
+#Kicon { background-image: url('韓式.webp'); }
+#Wicon { background-image: url('西式.webp'); }
+
+/* 修正 ID 選擇器的位置 */
+#price {
+    color: #de7866; 
+}
+
+#time {
+    color: rgb(11, 112, 79);
+}
+
+/* 修正 bottom 的單位 */
 #boxImage {
     position: absolute;
-    bottom: -10; /* 固定在底部 */
+    bottom: -1500px; /* 固定在底部 */
     left: 50%; /* 水平置中 */
     transform: translateX(-50%); /* 修正置中位置 */
     width: 500px; /* 圖片寬度，可依需求調整 */
     height: auto; /* 保持圖片比例 */
 }
+
+/* 修正動畫名稱 */
 @keyframes shake {
-    0% { transform: translateX(-10px) translateY(-10px); } /* 左上 */
-    25% { transform: translateX(10px) translateY(10px); }  /* 右下 */
-    50% { transform: translateX(-10px) translateY(-10px); } /* 左上 */
-    75% { transform: translateX(10px) translateY(10px); }  /* 右下 */
-    100% { transform: translateX(0) translateY(0); }  
+    0% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    50% { transform: translateX(5px) rotate(5deg); }
+    75% { transform: translateX(-5px) rotate(-5deg); }
+    100% { transform: translateX(0) rotate(0deg); }
 }   
 
+
 .shake {
-    animation: shake 5s ease-in-out;
+    animation: shake 0.8s ease-in-out 3;                  
 }

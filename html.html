@@ -13,11 +13,120 @@
     <h2>每一道料理，都是一場故事的展開；每一口品嚐，都是一次旅行的開始。<br/>
         美食不只是味蕾的享受，更是情感的連結，讓我們一起探索最令人垂涎的美味吧！
     </h2>
-    <button onclick="kind('Chinese')"><h3>中式美食</h3></button>
-    <button onclick="kind('Japanese')"><h3>日式美食</h3></button>
-    <button onclick="kind('Korean')"><h3>韓式美食</h3></button>
-    <button onclick="kind('Western')"><h3>西式美食</h3></button>
-    <img src="箱子.png" alt="箱子怎麼不見了" id= "boxImage" >
-  
-</body>
+    <div id="iconContainer">
+    <button id="Cicon" class="icon" onclick="kind('Chinese')"></button>
+    <button id="Jicon" class="icon" onclick="kind('Japanese')"></button>
+    <button id="Kicon" class="icon" onclick="kind('Korean')"></button>
+    <button id="Wicon" class="icon" onclick="kind('Western')"></button>  
+    </div>
+    <form id="restaurantForm">
+        <h2>今天吃什麼?</h2>
+        <p id="time">粗略對照</p>
+        <p>$=0~200元</p>
+        <p>$$=200~400元</p>
+        <p>$$$=400~600元</p>
+        <p>$$$$=600~800元</p>
+        <p>$$$$$=800+元</p>
+        <p>價位:</p>
+        <select id="Price" name="Price">
+            <option value="$">$</option>
+            <option value="$$">$$</option>
+            <option value="$$$">$$$</option>
+            <option value="$$$$">$$$$</option>
+            <option value="$$$$$">$$$$$</option>
+        </select>
+
+        <p>樣式:</p>
+        <input type="checkbox" id="food1" name="food" value="Chinese" checked>
+        <label for="food1">中式美食</label>
+        <input type="checkbox" id="food2" name="food" value="Japanese" checked>
+        <label for="food2">日式美食</label>
+        <input type="checkbox" id="food3" name="food" value="Korean" checked>
+        <label for="food3">韓式美食</label>
+        <input type="checkbox" id="food4" name="food" value="Western" checked>
+        <label for="food4">西式美食</label>
+        <button type="submit" id="choose">確認選項</button>
+    </form> 
+
+    <p id="result"></p>
+
+    <button id="KindButton">點擊跳轉頁面該種類</button>
+
+    <script>
+    let translatedType = ""; // 全域變數，存放選擇的類別
+
+    document.getElementById("restaurantForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // 防止表單重新載入頁面
+        
+        // 取得價位
+        let selectedPrice = document.getElementById("Price").value;
+
+        // 取得使用者勾選的美食種類
+        let selectedTypes = Array.from(document.querySelectorAll('input[name="food"]:checked'))
+                                 .map(input => input.value);
+
+        // 如果沒有選任何美食類型，就顯示錯誤訊息
+        if (selectedTypes.length === 0) {
+            document.getElementById("result").textContent = "請至少選擇一種類型！";
+            return;
+        }
+
+        // 讀取所有選中的類型的餐廳資料
+        let promises = selectedTypes.map(type => fetch(`${type} style.html`).then(res => res.text()));
+
+        Promise.all(promises).then(htmlFiles => {
+            let allRestaurants = [];
+
+            htmlFiles.forEach((html, index) => {
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(html, "text/html");
+
+                // 取得符合價位的餐廳
+                let filteredRestaurants = Array.from(doc.querySelectorAll("li"))
+                    .filter(li => li.dataset.price === selectedPrice) // 篩選符合價位的餐廳
+                    .map(li => ({
+                        name: li.textContent,
+                        type: selectedTypes[index] // 保留店家的類型
+                    }));
+
+                allRestaurants = allRestaurants.concat(filteredRestaurants);
+            });
+
+            if (allRestaurants.length === 0) {
+                document.getElementById("result").textContent = "沒有符合條件的餐廳！";
+                return;
+            }
+
+            // 隨機選擇一間餐廳
+            let randomIndex = Math.floor(Math.random() * allRestaurants.length);
+            let chosenRestaurant = allRestaurants[randomIndex];
+
+            // 類型轉換
+            let typeMapping = {
+                "Chinese": "中式",
+                "Japanese": "日式",
+                "Korean": "韓式",
+                "Western": "西式"
+            };
+
+            translatedType = typeMapping[chosenRestaurant.type] || chosenRestaurant.type;
+
+            document.getElementById("result").textContent = `今天吃：${chosenRestaurant.name} (${translatedType}美食)`;
+        });
+    });
+
+    // 綁定按鈕點擊事件（確保 translatedType 設定後才有效）
+    document.getElementById("KindButton").addEventListener("click", function() {
+        if (translatedType) {
+            kind(translatedType);
+        } else {
+            alert("請在抽籤完後執行此操作！");
+        }
+    });
+
     
+    </script>
+
+    <img src="箱子.png" alt="箱子怎麼不見了" id="boxImage">
+</body>
+</html>
