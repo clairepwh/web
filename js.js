@@ -17,7 +17,7 @@ switch(a){
     case "韓式":window.location.href = './Korean style.html';
         break;
     case "Western":
-    case "西式": window.location.href = './Western style.html';
+    case "西式":window.location.href = './Western style.html';
         break;
     case "home":window.location.href = './html.html';
         break;

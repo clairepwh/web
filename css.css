@@ -1,15 +1,18 @@
 body {
-    background-image: url('background.png');
+    background-color: #E9E2DA;
     background-size: cover;
     background-position: center;
-    background-attachment: relative;
+    background-attachment: fixed;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
+
 #iconContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 欄 */
-    gap: 20px; /* 圖片之間的間距 */
-    width: 880px; /* 整個區域的寬度 */
-    margin: 50px auto; /* 置中 */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    width: 880px;
+    margin: 50px auto; 
 }
 
 .icon {
@@ -22,35 +25,216 @@ body {
 #Kicon { background-image: url('韓式.webp'); }
 #Wicon { background-image: url('西式.webp'); }
 
-/* 修正 ID 選擇器的位置 */
-#price {
-    color: #de7866; 
+#price { color: #de7866; }
+#time { color: rgb(11, 112, 79); }
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding-bottom: 80px;
 }
 
-#time {
-    color: rgb(11, 112, 79);
-}
-
-/* 修正 bottom 的單位 */
 #boxImage {
-    position: absolute;
-    bottom: -1500px; /* 固定在底部 */
-    left: 50%; /* 水平置中 */
-    transform: translateX(-50%); /* 修正置中位置 */
-    width: 500px; /* 圖片寬度，可依需求調整 */
-    height: auto; /* 保持圖片比例 */
+    display: block;
+    height: auto;
 }
 
-/* 修正動畫名稱 */
+#choose {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
 @keyframes shake {
-    0% { transform: translateX(0) rotate(0deg); }
+    0%, 100% { transform: translateX(0) rotate(0deg); }
     25% { transform: translateX(-5px) rotate(-5deg); }
     50% { transform: translateX(5px) rotate(5deg); }
     75% { transform: translateX(-5px) rotate(-5deg); }
-    100% { transform: translateX(0) rotate(0deg); }
-}   
-
+}
 
 .shake {
-    animation: shake 0.8s ease-in-out 3;                  
+    animation: shake 0.8s ease-in-out 3;
+}
+
+.form-group {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: auto;
+    border-radius: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.hidden {
+    display: none;
+}
+
+#paperImage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: auto;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.8s ease-out, opacity 0.4s ease-out;
+}
+
+#paperImage.expand {
+    width: 300px;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+#paperImage.fade-out {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+}
+
+#paperContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+#paperContent {
+    position: absolute;
+    display: flex;
+    top: 49%;
+    left: 51%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 170px; 
+    text-align: center;
+    font-size: 16px;
+    font-weight: normal;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#closeButton {
+    position: absolute;
+    top: 22%;
+    right: 42%;
+    background: transparent;
+    color: black;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    display: hidden;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    z-index: 1000;
+}
+
+#closeButton:hover {
+    background: rgb(255, 181, 181);
+    color: white;
+}
+
+#KindButton {
+    position: absolute;
+    background-color: #f8f8f8;
+    top: 68%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    z-index: 1000; 
+}
+
+
+#KindButton, #closeButton {
+    display: none;
+}
+
+#paperContent.show #KindButton,
+#paperContent.show #closeButton {
+    display: flex;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #D5C9B3;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1000; 
+    color: #445965;
+}
+
+#slogan {
+    color: #b0afaf;
+    text-align: center;
+    display: block; /* Ensure it's treated as a block element */
+    width: 100%;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    padding-right: 30px;
+}
+
+.nav-buttons button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #445965;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nav-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .centered {
+        height: auto;
+        margin-top: 20px;
+    }
 }

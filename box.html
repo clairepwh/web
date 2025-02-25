@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW"><!--繁體中文-->
+<head>
+    <link rel="stylesheet" href="css.css">
+    <script src="js.js"></script>
+    <meta charset="UTF-8"><!--指定字元編碼-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--調整視窗大小-->
+    <title>台北車站附近美食</title>
+    
+</head>
+<body>
+    <script>
+    function adjustBodyPadding() {
+        let navbar = document.querySelector(".header"); // Get the navbar
+        if (navbar) {
+            document.body.style.paddingTop = navbar.offsetHeight + "px";
+        }
+    }
+    window.addEventListener("load", adjustBodyPadding);
+    window.addEventListener("resize", adjustBodyPadding);
+    </script>
+    <div class="header">
+        <h1>今天吃什麼？</h1>
+        <div class="nav-buttons">
+            <button onclick="kind('home')"><h3>首頁</h3></button>
+            <button onclick="kind('Chinese')"><h3>中式美食</h3></button>
+            <button onclick="kind('Japanese')"><h3>日式美食</h3></button>
+            <button onclick="kind('Korean')"><h3>韓式美食</h3></button>
+            <button onclick="kind('Western')"><h3>西式美食</h3></button>
+        </div>
+    </div>
+    <div class="centered">
+        <form id="restaurantForm">
+            <button type="submit" id="choose">
+                <img src="箱子.png" alt="箱子怎麼不見了" id="boxImage">
+            </button>
+
+            <div class="form-group">
+                <p>價位:</p>
+                <select id="Price" name="Price">
+                    <option value="$">$</option>
+                    <option value="$$">$$</option>
+                    <option value="$$$">$$$</option>
+                    <option value="$$$$">$$$$</option>
+                    <option value="$$$$$">$$$$$</option>
+                </select>
+                <p>$＝0～200元｜$$＝200～400元｜$$$＝400～600元｜$$$$＝600～800元｜$$$$$＝800＋元</p>
+
+                <p>樣式:</p>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="food1" name="food" value="Chinese" checked>
+                    <label for="food1">中式美食</label>
+                    <input type="checkbox" id="food2" name="food" value="Japanese" checked>
+                    <label for="food2">日式美食</label>
+                    <input type="checkbox" id="food3" name="food" value="Korean" checked>
+                    <label for="food3">韓式美食</label>
+                    <input type="checkbox" id="food4" name="food" value="Western" checked>
+                    <label for="food4">西式美食</label>
+                </div>
+            </div>
+        </form>
+
+        <!-- Closed Paper (Initially Hidden) -->
+        <img src="closed.png" id="paperImage" class="hidden">
+
+        <!-- Opened Paper Content -->
+        <button id="closeButton"><strong>X</strong></button>
+        <div id="paperContent" class="hidden">
+            <p id="result"></p>
+        </div>
+        <button id="KindButton">點擊跳轉頁面該種類</button>
+    </div>
+
+    <script>
+    let translatedType = "";
+
+    document.getElementById("restaurantForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let selectedPrice = document.getElementById("Price").value;
+        let selectedTypes = Array.from(document.querySelectorAll('input[name="food"]:checked'))
+                                .map(input => input.value);
+
+        if (selectedTypes.length === 0) {
+            showResultOnPaper("沒有符合條件的餐廳！");
+            return;
+        }
+
+        let promises = selectedTypes.map(type => fetch(`${type} style.html`).then(res => res.text()));
+
+        Promise.all(promises).then(htmlFiles => {
+            let allRestaurants = [];
+
+            htmlFiles.forEach((html, index) => {
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(html, "text/html");
+
+                let filteredRestaurants = Array.from(doc.querySelectorAll("li"))
+                    .filter(li => li.dataset.price === selectedPrice)
+                    .map(li => ({
+                        name: li.textContent,
+                        type: selectedTypes[index]
+                    }));
+
+                allRestaurants = allRestaurants.concat(filteredRestaurants);
+            });
+
+            let resultText;
+            if (allRestaurants.length === 0) {
+                resultText = "沒有符合條件的餐廳！";
+            } else {
+                let randomIndex = Math.floor(Math.random() * allRestaurants.length);
+                let chosenRestaurant = allRestaurants[randomIndex];
+
+                let typeMapping = {
+                    "Chinese": "中式",
+                    "Japanese": "日式",
+                    "Korean": "韓式",
+                    "Western": "西式"
+                };
+
+                translatedType = typeMapping[chosenRestaurant.type] || chosenRestaurant.type;
+                resultText = `今天吃：<br>${chosenRestaurant.name} (${translatedType}美食)`;
+            }
+
+            showResultOnPaper(resultText);
+        });
+    });
+
+    function showResultOnPaper(resultText) {
+        let boxImage = document.getElementById("boxImage");
+        let paperImage = document.getElementById("paperImage");
+        let paperContent = document.getElementById("paperContent");
+        let closeButton = document.getElementById("closeButton");
+        let kindButton = document.getElementById("KindButton");
+
+        boxImage.classList.add("shake");
+
+        setTimeout(() => {
+            boxImage.classList.remove("shake");
+            boxImage.style.display = "none";  
+
+            paperImage.src = "closed.png";
+            paperImage.classList.remove("hidden");
+            paperImage.classList.add("expand");
+
+            setTimeout(() => {
+                paperImage.src = "opened.png"; 
+                paperContent.classList.add("show"); 
+
+                closeButton.style.display = "block";
+                kindButton.style.display = "block";
+
+                document.getElementById("result").innerHTML = resultText; 
+            }, 1000);
+        }, 800);
+    }
+
+
+    document.getElementById("KindButton").addEventListener("click", function () {
+        if (translatedType) {
+            kind(translatedType);
+        } else {
+            alert("請在抽籤完後執行此操作！");
+        }
+    });
+
+    document.getElementById("closeButton").addEventListener("click", function() {
+        document.getElementById("paperContent").classList.add("hidden");
+        document.getElementById("paperImage").classList.add("hidden");
+        document.getElementById("KindButton").style.display = "none";
+        document.getElementById("closeButton").style.display = "none";
+        document.getElementById("boxImage").style.display = "block";
+        document.getElementById("result").innerHTML = "";
+    });
+    </script>
+</body>
+</html>
