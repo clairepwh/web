@@ -16,17 +16,69 @@ body {
 }
 
 .icon {
+    position: relative;
+    width: 408px; /* Keep your existing width */
+    height: 289px; /* Keep your existing height */
     background-size: cover;
-    width: 408px;
-    height: 289px;
+    background-position: center;
+    border-radius: 8px; /* Optional: rounded corners */
+    overflow: hidden;
+    cursor: pointer;
+    transition: filter 0.4s ease-in-out;
+    bottom: 10px;
 }
-#Cicon { background-image: url('中式.webp'); }
-#Jicon { background-image: url('日式.webp'); }
-#Kicon { background-image: url('韓式.webp'); }
-#Wicon { background-image: url('西式.webp'); }
+
+#Cicon { background-image: url('中式.png'); }
+#Jicon { background-image: url('日式.png'); }
+#Kicon { background-image: url('韓式.png'); }
+#Wicon { background-image: url('西式.png'); }
+#learn-more { color: #919090}
 
 #price { color: #de7866; }
 #time { color: rgb(11, 112, 79); }
+
+
+/* Apply dark overlay effect when hovering */
+.icon:hover {
+    filter: grayscale(1) brightness(0.6);
+}
+
+/* White border effect (appears on hover) */
+.icon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, inset 0.4s ease-in-out;
+}
+
+/* Make border visible on hover */
+.icon:hover::after {
+    opacity: 1;
+    inset: 10px; /* Moves the border inward */
+}
+
+/* Styling for text inside .icon */
+.icon .content {
+    position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    text-shadow: 2px 2px 5px rgba(58, 58, 58, 0.7); /* Soft black glow */
+}
+
+/* Show text on hover */
+.icon:hover .content {
+    opacity: 1;
+}
 
 .centered {
     display: flex;
@@ -155,7 +207,7 @@ body {
     align-items: center;
     border-radius: 50%;
     transition: all 0.2s ease-in-out;
-    z-index: 1000;
+    z-index: 500;
 }
 
 #closeButton:hover {

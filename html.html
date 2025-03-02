@@ -9,8 +9,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>台北車站附近美食</h1>
         <div class="nav-buttons">
+            <button onclick="kind('home')"><h1>台北車站附近美食</h1></button>
             <button id="eat" onclick="location.href='./box.html'"><h3>吃什麼</h3></button>
         </div>
     </div>
@@ -28,10 +28,38 @@
         美食不只是味蕾的享受，更是情感的連結，讓我們一起探索最令人垂涎的美味吧！
     </h4>
     <div id="iconContainer">
-    <button id="Cicon" class="icon" onclick="kind('Chinese')"></button>
-    <button id="Jicon" class="icon" onclick="kind('Japanese')"></button>
-    <button id="Kicon" class="icon" onclick="kind('Korean')"></button>
-    <button id="Wicon" class="icon" onclick="kind('Western')"></button>  
+        <button id="Cicon" class="icon" onclick="kind('Chinese')">
+            <div class="content">
+                <h4>中式美食<br>CHINESE CUISINE</h4>
+                <hr>
+                <p>中式美食涵蓋中國各地的傳統菜餚，特色鮮明，注重色香味形的搭配，並以多樣的食材和烹飪技巧著稱。</p>
+                <p id="learn-more">Click to learn more >></p>
+            </div>
+        </button>
+        <button id="Jicon" class="icon" onclick="kind('Japanese')">
+            <div class="content">
+                <h4>日式美食<br>JAPANESE CUISINE</h4>
+                <hr>
+                <p>日式美食結合了精緻的製作工藝與對食材原味的尊重，強調食材的新鮮與季節性，並講究色彩搭配與美觀呈現。</p>
+                <p id="learn-more">Click to learn more >></p>
+            </div>
+        </button>
+        <button id="Kicon" class="icon" onclick="kind('Korean')">
+            <div class="content">
+                <h4>韓式美食<br>KOREAN CUISINE</h4>
+                <hr>
+                <p>韓式美食以強烈的風味、豐富的食材和獨特的發酵技術為特色，注重辣味、酸味、鹹味和甜味的平衡。</p>
+                <p id="learn-more">Click to learn more >></p>
+            </div>
+        </button>
+        <button id="Wicon" class="icon" onclick="kind('Western')">
+            <div class="content">
+                <h4>西式美食<br>WESTERN CUISINE</h4>
+                <hr>
+                <p>西式美食源自於歐洲、美洲及其他地區，特色在於使用豐富的食材、濃郁的風味和多樣的烹飪技術，並強調醬料和調味的運用。</p>
+                <p id="learn-more">Click to learn more >></p>
+            </div>
+        </button>  
     </div>
 </body>
 </html>
