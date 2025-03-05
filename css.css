@@ -19,6 +19,7 @@ img, video {
     max-width: 880px;
     margin: 50px auto; 
     padding: 0 10px;
+    overflow-x: hidden;
 }
 
 @media (max-width: 850px) {
