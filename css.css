@@ -275,8 +275,8 @@ img, video {
 
 @media (max-width: 480px) {
     #paperImage {
-        max-width: 150px;
-        top: 140%;
+        max-width: 200px;
+        top: 120%;
         left: 49%;
         transform: translate(-50%, -50%);
     }
@@ -336,7 +336,7 @@ img, video {
 
 @media (max-width: 480px) {
     #paperContent {
-        top: 138%;
+        top: 136%;
         left: 51%;
         font-size: 14px;
         max-width: 120px;
@@ -458,7 +458,7 @@ img, video {
 
 @media (max-width: 480px) {
     #KindButton {
-        top: 200%;
+        top: 210%;
         left: 50%;
         font-size: 12px;
         max-width: 120px;
