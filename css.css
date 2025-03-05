@@ -276,6 +276,9 @@ img, video {
 @media (max-width: 480px) {
     #paperImage {
         max-width: 150px;
+        top: 140%;
+        left: 49%;
+        transform: translate(-50%, -50%);
     }
 }
 
@@ -336,7 +339,7 @@ img, video {
         top: 138%;
         left: 51%;
         font-size: 14px;
-        max-width: 140px;
+        max-width: 120px;
         transform: translate(-50%, -50%);
     }
 }
@@ -455,8 +458,10 @@ img, video {
 
 @media (max-width: 480px) {
     #KindButton {
+        top: 200%;
         left: 50%;
         font-size: 12px;
+        max-width: 120px;
         transform: translate(-50%, -50%);
     }
 }
