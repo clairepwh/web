@@ -24,19 +24,16 @@ function kind(number) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    // 確保圖片元素已經加載完畢
     const boxImage = document.getElementById("boxImage");
 
-    // 如果圖片存在，則綁定點擊事件
     if (boxImage) {
         boxImage.addEventListener("click", function() {
             
             this.classList.add("shake");
 
-            // 動畫結束後，移除 .shake 類別，這樣下次可以再次觸發動畫
             setTimeout(() => {
                 this.classList.remove("shake");
-            }, 5000); // 動畫時間 500 毫秒
+            }, 5000);
         });
     } else {
         console.log("圖片元素未找到！");
@@ -49,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         Scrollbar.use(window.OverscrollPlugin);
 
         let customScroll = Scrollbar.init(document.querySelector('.js-scroll-list'), {
-            damping: 0.07, // Smoother slow scrolling
+            damping: 0.07, 
             plugins: { overscroll: true }
         });
 
@@ -62,8 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             customScroll.addListener(({ offset }) => {
                 let top = offset.y;
                 let viewportHeight = window.innerHeight;
-                let threshold = viewportHeight * 0.5; // Adjusts when items appear/disappear
-
+                let threshold = viewportHeight * 0.5;
                 listItems.forEach((item, index) => {
                     let itemRect = item.getBoundingClientRect();
                     let itemTop = itemRect.top;
@@ -75,13 +71,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         item.classList.remove('item-focus');
                     }
 
-                    // Ensure previous & next item stays visible longer with a smooth transition
                     if (index > 0 && index < listItems.length - 1) {
                         listItems[index - 1].classList.add('item-next');
                         listItems[index + 1].classList.add('item-next');
                     }
 
-                    // Delay the disappearance of previous items slightly
                     if (itemTop < threshold / 3) {
                         item.classList.add('item-hide');
                     } else {
